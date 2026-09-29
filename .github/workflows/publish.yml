@@ -1,0 +1,18 @@
+name: publish-trigger
+# Israel time = UTC+3 until 25.10.2026 (then UTC+2: shift hours by +1)
+on:
+  schedule:
+    - cron: "0 8 * * 0-5"    # 11:00 Sun-Fri
+    - cron: "0 16 * * 0-4"   # 19:00 Sun-Thu
+    - cron: "0 17 * * 6"     # 20:00 Sat
+  workflow_dispatch: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Make webhook
+        env:
+          HOOK: ${{ secrets.MAKE_WEBHOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "MAKE_WEBHOOK secret missing"; exit 1; fi
+          curl -fsS -X POST "$HOOK" -H "Content-Type: application/json" -d '{"source":"github"}'

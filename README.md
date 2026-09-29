@@ -1,2 +1,1 @@
-# bfix-posts
-B-FIX Instagram carousel images
+# B-FIX posts\nCarousel images for @tomer_boasira. Schedule lives in the Google Sheet; GitHub Actions pings Make at posting times.\n
